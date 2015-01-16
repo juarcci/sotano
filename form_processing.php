@@ -19,23 +19,30 @@
     </head>
     <body>
         <h1>Blog de El Sotano Rock</h1>
+        <a href="new_post.php">Nueva entrada</a>
         <?php
-            $query="SELECT * FROM principal";
+            $query="SELECT * FROM principal ORDER BY idprincipal DESC";
             // Query sobre la db
             $result = mysqli_query($link, $query);
             // Se guarda en la variable $result el resultado de la query 
             // anteriormente ejecutada.
         ?>
         <?php
-            while ($fila = mysqli_fetch_assoc($result)){
-        ?>
-            <pre>
-                <?php
-                    print_r($fila);
-                ?>
-            </pre>
-                
-        <?php
+            while ($fila = mysqli_fetch_assoc($result)){ 
+                    foreach($fila as $atrib => $dato) {
+                        switch ($atrib) {
+                            case "idprincipal":
+                                break;
+                            case "titulo":
+                                echo "<h2>{$dato}<br /></h2>";
+                                break;
+                            case "contenido":
+                            case "fecha":
+                                echo "{$dato}<br /><br />";
+                                break;
+                        }
+                    }
+                    echo "<hr />";       
             }
             // Con este bucle While se exhibe el contenido del array generado
             // a partir de la query realizada anteriormente.
